@@ -137,6 +137,36 @@ L'algebra TIC garantisce matematicamente:
 | **Chiusura** | Composizione produce sempre celle valide |
 | **Sicurezza** | No eval, exec, I/O diretto |
 
+## Proprietà Emergenti
+
+Dal design TIC emergono **gratis** capacità che normalmente richiedono implementazione esplicita:
+
+| Constraint TIC | Emergenza |
+|----------------|-----------|
+| **Immutabilità** | UNDO/REDO triviale — ogni stato è snapshot |
+| **Purezza** | Testing triviale — f(x) sempre = f(x) |
+| **Effetti boundary** | Audit trail gratis — ogni I/O è intercettato |
+| **Naming semantico** | Documentazione gratis — il codice si legge |
+| **Propagazione** | Reactive gratis — dipendenze auto-tracked |
+| **Terminazione** | No deadlock — tutto finisce |
+
+```python
+# Esempio: UNDO/REDO emergente dall'immutabilità
+history = []
+
+def azione(stato, operazione):
+    nuovo_stato = operazione(stato)  # Immutabile: stato originale intatto
+    history.append(stato)            # Snapshot automatico
+    return nuovo_stato
+
+def undo():
+    return history.pop() if history else None
+
+# Funziona GRATIS perché le operazioni TIC non modificano mai l'input
+```
+
+> "Non aggiungi feature. Le scopri." — Filosofia TIC
+
 ## Esempi
 
 ```bash
