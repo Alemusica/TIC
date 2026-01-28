@@ -11,8 +11,8 @@ ristorante.stato        → stato attuale
 import sys
 sys.path.insert(0, '../../../')
 
-from pti_core.archetipi import elemento, contenitore, confronta
-from pti_core.propagazione import Tessuto
+from tic_core.archetipi import elemento, contenitore, confronta
+from tic_core.propagazione import Tessuto
 
 # Import molecole
 from ..molecole import tavolo, prenotazione

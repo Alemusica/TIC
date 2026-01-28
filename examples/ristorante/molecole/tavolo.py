@@ -11,8 +11,8 @@ tavolo.libera     → libera tavolo
 import sys
 sys.path.insert(0, '../../../')
 
-from pti_core.archetipi import elemento, confronta
-from pti_core.propagazione import Tessuto
+from tic_core.archetipi import elemento, confronta
+from tic_core.propagazione import Tessuto
 
 # Tessuto locale per questo dominio
 tessuto = Tessuto()
@@ -110,19 +110,19 @@ def query_tavoli_liberi(tavoli: list) -> list:
     >>> len(query_tavoli_liberi(tavoli))
     2
     """
-    from pti_core.archetipi import contenitore
+    from tic_core.archetipi import contenitore
     return contenitore.filtra(tavoli, tavolo_libero)
 
 
 def query_tavoli_occupati(tavoli: list) -> list:
     """?- tavoli.occupati"""
-    from pti_core.archetipi import contenitore
+    from tic_core.archetipi import contenitore
     return contenitore.filtra(tavoli, lambda t: not tavolo_libero(t))
 
 
 def query_capienza_totale(tavoli: list) -> int:
     """?- ristorante.capienza"""
-    from pti_core.archetipi import contenitore, valore
+    from tic_core.archetipi import contenitore, valore
     posti = contenitore.mappa(tavoli, lambda t: elemento.legge(t, 'posti'))
     return valore.somma(posti)
 

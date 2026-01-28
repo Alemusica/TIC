@@ -1,8 +1,8 @@
 """
-PTI — Paradigma Tissutale Interconnesso
-Core Implementation
+TIC — Tessuto Interconnesso Computante
+       Tissular Interconnected Code
 
-Questo modulo fornisce le primitive per implementare PTI in Python.
+Core Implementation - Safe algebra for LLM-generated code.
 """
 
 from .archetipi import elemento, contenitore, confronta, valore, testo

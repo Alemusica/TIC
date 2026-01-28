@@ -6,7 +6,7 @@ import pytest
 import sys
 sys.path.insert(0, '..')
 
-from pti_core.propagazione import Tessuto
+from tic_core.propagazione import Tessuto
 
 
 class TestTessuto:

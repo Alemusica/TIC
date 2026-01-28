@@ -6,7 +6,7 @@ import pytest
 import sys
 sys.path.insert(0, '..')
 
-from pti_core.archetipi import elemento, contenitore, confronta, valore, testo
+from tic_core.archetipi import elemento, contenitore, confronta, valore, testo
 
 
 class TestElemento:

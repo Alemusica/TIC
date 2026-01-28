@@ -10,7 +10,7 @@ prenotazione.conferma → conferma prenotazione
 import sys
 sys.path.insert(0, '../../../')
 
-from pti_core.archetipi import elemento, confronta, testo, valore
+from tic_core.archetipi import elemento, confronta, testo, valore
 
 
 def prenotazione_crea(nome: str, persone: int, ora: str, telefono: str = None) -> dict:

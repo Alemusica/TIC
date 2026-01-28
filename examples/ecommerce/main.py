@@ -12,7 +12,7 @@ Dimostra:
 import sys
 sys.path.insert(0, '../../')
 
-from pti_core.archetipi import elemento
+from tic_core.archetipi import elemento
 from organismi.shop import Shop
 
 

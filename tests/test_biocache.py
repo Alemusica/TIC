@@ -6,7 +6,7 @@ import pytest
 import sys
 sys.path.insert(0, '..')
 
-from pti_core.biocache import BiocCache, LTM, MTM, STM
+from tic_core.biocache import BiocCache, LTM, MTM, STM
 
 
 class TestBiocCache:

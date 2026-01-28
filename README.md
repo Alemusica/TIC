@@ -1,64 +1,111 @@
-# PTI — Paradigma Tissutale Interconnesso
+# TIC — Tessuto Interconnesso Computante
+
+**Tissular Interconnected Code** — Safe algebra for LLM-generated code.
 
 > "Un mattone resta sempre un mattone. Lo togli di lì, lo metti di là. Sempre mattoni sono."
 
-## Cos'è PTI?
+## Cos'è TIC?
 
-PTI è un **meta-paradigma** di programmazione che riconosce un fatto semplice:
+TIC è un **metalinguaggio** che definisce un'algebra sicura per la generazione di codice da LLM.
 
-**Il 90% del codice è ridondanza mascherata.**
-
-```python
-# Queste sembrano funzioni diverse...
-def validate_user_email(user):
-    return "@" in user.email
-
-def validate_product_sku(product):
-    return len(product.sku) == 8
-
-def validate_order_total(order):
-    return order.total > 0
-
-# ...ma sono tutte la stessa operazione: verifica.formato
+**Il problema:**
+```typescript
+// LLM genera codice tradizionale
+function processData(data) {
+  // Può fare QUALSIASI COSA:
+  fetch('http://evil.com')     // network I/O
+  fs.writeFile('/etc/passwd')  // filesystem
+  eval(userInput)              // arbitrary code execution
+}
 ```
 
-PTI non inventa nulla. Riconosce pattern esistenti e li applica sistematicamente:
+**La soluzione TIC:**
+```python
+# LLM genera SOLO da algebra TIC
+cell processData = componi.sequenza(
+    elemento.legge('data'),
+    contenitore.mappa(trasforma),
+    effetto.emetti('result')  # Runtime controlla!
+)
+```
 
-| Fonte | Cosa prende |
-|-------|-------------|
-| Prolog | naming = logica |
-| Database | normalizzazione, no duplicazione |
-| Funzionale | purity, composizione |
-| Reactive | propagazione automatica |
-| Biologico | tessuti, gerarchia, memoria |
+L'LLM **non può** generare `eval`, `fetch`, `os.system` — non esistono nell'algebra.
+
+## Architettura 4 Layer
+
+```
+┌─────────────────────────────────────┐
+│ LAYER 1: USER                       │
+│ "Aggiungi feature X"                │
+└──────────────┬──────────────────────┘
+               ▼
+┌─────────────────────────────────────┐
+│ LAYER 2: LLM                        │
+│ Genera codice TIC-compliant         │
+└──────────────┬──────────────────────┘
+               ▼
+┌─────────────────────────────────────┐
+│ LAYER 3: ALGEBRA TIC                │
+│ Solo primitivi puri permessi        │
+│ NO: eval, exec, I/O diretto         │
+└──────────────┬──────────────────────┘
+               ▼
+┌─────────────────────────────────────┐
+│ LAYER 4: RUNTIME                    │
+│ Esegue in sandbox, audit trail      │
+└─────────────────────────────────────┘
+```
 
 ## Quick Start
 
 ```python
-from pti_core.archetipi import elemento, contenitore, confronta, valore
+from tic_core.archetipi import elemento, contenitore, confronta, valore, flusso
 
-# Crea un elemento
+# Crea un elemento (puro, immutabile)
 prodotto = elemento.crea({
     'nome': 'Widget',
     'prezzo': 10.00,
     'quantita': 5
 })
 
-# Leggi attributi
-nome = elemento.legge(prodotto, 'nome')  # 'Widget'
+# Composizione funzionale
+calcola_totale = flusso.sequenza(
+    lambda items: contenitore.mappa(items, lambda i: elemento.legge(i, 'prezzo')),
+    valore.somma
+)
 
-# Operazioni immutabili
-prodotto2 = elemento.scrive(prodotto, 'quantita', 10)
-
-# Contenitori
-prodotti = contenitore.crea([prodotto, prodotto2])
-economici = contenitore.filtra(prodotti, lambda p: elemento.legge(p, 'prezzo') < 20)
-
-# Confronti semantici
-sotto_soglia = confronta.sotto(elemento.legge(prodotto, 'quantita'), 3)
+# Pattern matching
+gestisci_stato = flusso.scegli(stato, [
+    ('pending', lambda x: processa),
+    ('done', lambda x: archivia),
+    ('_', lambda x: ignora)
+])
 ```
 
-## I 4 Livelli
+## Algebra Base
+
+### Primitivi Puri (Layer 3)
+
+```
+ELEMENTO      → crea, legge, scrive, elimina
+CONTENITORE   → mappa, filtra, riduce, trova, ordina
+CONFRONTA     → uguale, maggiore, tra, nullo, tutti
+VALORE        → incrementa, somma, media, clamp
+TESTO         → pulisce, contiene, divide, unisce
+FLUSSO        → se, scegli, componi, sequenza, ripeti (BOUNDED!)
+```
+
+### Effetti (Boundary - Runtime controlla)
+
+```
+effetto.emetti   → emit event (runtime intercepts)
+effetto.leggi    → read from source (runtime provides)
+effetto.scrivi   → write to sink (runtime controls)
+```
+
+Gli effetti **non eseguono nulla**. Creano descrizioni che il Runtime decide se permettere.
+
+## I 4 Livelli di Codice
 
 ```
 LIVELLO 1: ARCHETIPI
@@ -78,115 +125,73 @@ LIVELLO 4: SISTEMI
   └── server.http, auth.sistema
 ```
 
-**Regola ferrea**: Livello N usa **solo** livello N-1 o inferiore.
+## Proprietà Garantite
 
-## Naming Semantico
+L'algebra TIC garantisce matematicamente:
 
-Il nome **è** la documentazione:
+| Proprietà | Significato |
+|-----------|-------------|
+| **Purezza** | Stessa input → stessa output |
+| **Terminazione** | No loop infiniti (`ripeti` è bounded) |
+| **Immutabilità** | Operazioni non modificano input |
+| **Chiusura** | Composizione produce sempre celle valide |
+| **Sicurezza** | No eval, exec, I/O diretto |
 
-```
-soggetto.verbo              → "il testo si pulisce"
-soggetto.verbo.oggetto      → "il contenitore aggiunge l'elemento"
-soggetto.stato              → "il prodotto è disponibile"
-```
-
-Se non sai come chiamarla, non sai cosa fa.
-
-## Propagazione
-
-Le variabili non sono isolate. Sono **cellule in un tessuto**:
-
-```python
-from pti_core.propagazione import Tessuto, fatto, derivato
-
-tessuto = Tessuto()
-
-# Fatto base
-tessuto.imposta('tavolo.1.stato', 'libero')
-tessuto.imposta('tavolo.2.stato', 'occupato')
-
-# Fatto derivato (si aggiorna automaticamente)
-@tessuto.derivato('tavoli.liberi', dipende_da=['tavolo.*.stato'])
-def calcola():
-    return [t for t in tavoli if t.stato == 'libero']
-
-# Quando tavolo.1.stato cambia → tavoli.liberi si aggiorna
-tessuto.imposta('tavolo.1.stato', 'occupato')
-# tavoli.liberi è già aggiornato, O(1)
-```
-
-## BiocCache (Memoria)
-
-Tre livelli di permanenza:
-
-```
-LTM (Long Term) → Archetipi, mai rimosso
-MTM (Medium Term) → Pattern frequenti
-STM (Short Term) → Ring buffer, temporaneo
-```
-
-Promozione automatica basata su frequenza d'uso.
-
-## Struttura Progetto
-
-```
-PTI/
-├── pti_core/
-│   ├── archetipi/      # Livello 1
-│   │   ├── elemento.py
-│   │   ├── contenitore.py
-│   │   ├── confronta.py
-│   │   ├── valore.py
-│   │   └── testo.py
-│   ├── propagazione/   # Sistema reattivo
-│   │   └── tessuto.py
-│   └── biocache/       # Memoria
-│       └── cache.py
-├── examples/
-│   └── ristorante/     # Demo completa
-├── spec/               # Specifiche formali
-├── tools/              # Linter, analyzer
-└── tests/
-```
-
-## Esempio: Ristorante
+## Esempi
 
 ```bash
-cd examples/ristorante
-python main.py
+# Ristorante
+cd examples/ristorante && python main.py
+
+# E-Commerce con effetti
+cd examples/ecommerce && python main.py
 ```
 
-Output:
+## Test & Benchmark
+
+```bash
+# Unit tests (55 test)
+pytest tests/ -v
+
+# Proprietà algebra (26 test)
+pytest benchmarks/test_algebra_properties.py -v
+
+# Scenari LLM (18 test)
+pytest benchmarks/test_llm_scenarios.py -v
+
+# Performance benchmark
+pytest benchmarks/test_performance.py --benchmark-autosave
 ```
-PTI DEMO: Sistema Prenotazione Ristorante
-=========================================
 
-1. Creazione ristorante...
-   ✓ Ristorante 'Trattoria Da Mario' creato con 5 tavoli
+## Struttura
 
-2. Stato iniziale:
-   Tavoli liberi:        5/5
-   Capienza disponibile: 22 posti
-
-3. Prima prenotazione: Mario Rossi, 4 persone, ore 20:00
-   ✓ Prenotazione confermata per Mario Rossi, tavolo T1
-
-...
+```
+TIC/
+├── tic_core/
+│   ├── archetipi/      # Primitivi algebra
+│   ├── propagazione/   # Sistema reattivo
+│   └── biocache/       # Memoria 3 livelli
+├── examples/
+│   ├── ristorante/
+│   └── ecommerce/
+├── benchmarks/         # Performance + validazione
+├── spec/               # Specifiche formali
+└── tests/
 ```
 
 ## Roadmap
 
 ```
-[x] FASE 1: POC Python - proof of concept
-[ ] FASE 2: Tool/Linter - enforcing convenzioni
+[x] FASE 1: POC Python
+[ ] FASE 2: Linter/Validator TIC
 [ ] FASE 3: Runtime ottimizzato
-[ ] FASE 4: Linguaggio nativo con benchmark
+[ ] FASE 4: Linguaggio nativo + benchmark LLM
 ```
 
 ## Filosofia
 
 ```
-PTI non è una nuova arte marziale.
+TIC non è una nuova arte marziale.
 È il Jeet Kune Do del codice.
 
 Prendi le mosse migliori da ogni stile.
@@ -199,3 +204,4 @@ Un seme di sesamo contiene l'universo intero.
 
 **Versione:** 0.1.0
 **Autori:** Flutur (ideatore), Claude (executor)
+**Licenza:** MIT

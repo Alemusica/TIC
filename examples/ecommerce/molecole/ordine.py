@@ -13,7 +13,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../..'))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from pti_core.archetipi import elemento, contenitore, confronta, valore, flusso, effetto
+from tic_core.archetipi import elemento, contenitore, confronta, valore, flusso, effetto
 
 
 # === STATI ORDINE ===

@@ -15,9 +15,9 @@ import pytest
 import sys
 sys.path.insert(0, '..')
 
-from pti_core.archetipi import elemento, contenitore, confronta, valore, flusso
-from pti_core.propagazione import Tessuto
-from pti_core.biocache import BiocCache
+from tic_core.archetipi import elemento, contenitore, confronta, valore, flusso
+from tic_core.propagazione import Tessuto
+from tic_core.biocache import BiocCache
 
 
 # =============================================================================

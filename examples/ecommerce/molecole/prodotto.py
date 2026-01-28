@@ -8,7 +8,7 @@ Dimostra composizione pura di archetipi.
 import sys
 sys.path.insert(0, '../../../')
 
-from pti_core.archetipi import elemento, confronta, valore, contenitore, flusso
+from tic_core.archetipi import elemento, confronta, valore, contenitore, flusso
 
 
 # === FATTI (creazione) ===

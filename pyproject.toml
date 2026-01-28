@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pti-core"
+name = "tic-core"
 version = "0.1.0"
-description = "PTI — Paradigma Tissutale Interconnesso"
+description = "TIC — Tessuto Interconnesso Computante: Safe algebra for LLM-generated code"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -34,7 +34,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pti_core*"]
+include = ["tic_core*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

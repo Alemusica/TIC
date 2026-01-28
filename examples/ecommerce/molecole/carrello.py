@@ -11,7 +11,7 @@ Dimostra:
 import sys
 sys.path.insert(0, '../../../')
 
-from pti_core.archetipi import elemento, contenitore, confronta, valore, flusso
+from tic_core.archetipi import elemento, contenitore, confronta, valore, flusso
 
 
 # === FATTI ===
