@@ -177,6 +177,15 @@ cd examples/ristorante && python main.py
 cd examples/ecommerce && python main.py
 ```
 
+## Documentazione
+
+| Doc | Contenuto |
+|-----|-----------|
+| [spec/TIC-COMPACT.md](spec/TIC-COMPACT.md) | Riferimento completo (~800 token) |
+| [spec/TIC-MINI.md](spec/TIC-MINI.md) | Contesto minimale LLM (~200 token) |
+| [spec/CASI-USO.md](spec/CASI-USO.md) | Esempi pratici con analisi onesta |
+| [spec/ALGEBRA.md](spec/ALGEBRA.md) | Specifica formale algebra |
+
 ## Test & Benchmark
 
 ```bash
